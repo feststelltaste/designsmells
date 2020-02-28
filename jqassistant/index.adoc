@@ -1,0 +1,128 @@
+:toc: left
+= Identifying Design Smells with jQAssistant
+
+This document shows possible solutions for the design smell analysis challenge.
+
+// tag::default[]
+[[default]]
+[role=group,includesConcepts="designsmell:*"]
+// end::default[]
+
+== Design Smells
+
+
+=== Abstraction
+
+==== God
+// tag::designsmellGod[]
+[[designsmell:God]]
+[source,cypher,role=concept]
+.A class or interface with very many methods.
+----
+MATCH (t:Type)-[:DECLARES]->(m:Method)
+RETURN t.fqn, COUNT(m) as Methods
+ORDER BY Methods DESC
+LIMIT 1
+----
+// end::designsmellGod[]
+
+==== Sibling
+// tag::designsmellSibling[]
+[[designsmell:Sibling]]
+[source,cypher,role=concept]
+.Classes or interfaces with the same name in different packages.
+----
+MATCH
+  (c1:Type),(c2:Type)
+WHERE c1.name = c2.name AND c1 <> c2
+RETURN
+  c1.fqn, c2.fqn
+----
+// end::designsmellSibling[]
+
+
+=== Hierarchy
+
+==== Monarch
+// tag::designsmellMonarch[]
+[[designsmell:Monarch]]
+[source,cypher,role=concept]
+.A class whose inheritance hierarchy goes very deep.
+----
+MATCH
+  h=(m:Class)-[:EXTENDS*]->(t:Type)
+RETURN
+  m.fqn, length(h) as Depth
+ORDER BY
+  Depth desc
+LIMIT 1
+----
+// end::designsmellMonarch[]
+
+
+=== Modularization
+
+==== Cycler
+
+===== Cycler (Simple Version)
+// tag::designsmellCyclerSimple[]
+[[designsmell:CyclerSimple]]
+[source,cypher,role=concept]
+.A class within a dependency cycle.
+----
+MATCH
+  (c1)-[:DEPENDS_ON*]->(c1)
+RETURN
+  c1
+----
+// end::designsmellCyclerSimple[]
+
+===== Cycler (Advanced Version)
+// tag::designsmellCyclerAdvanced[]
+[[designsmell:CyclerAdvanced]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.A class within a dependency cycle (advanced: query results produces class diagram).
+----
+MATCH
+  (c1)-[:DEPENDS_ON]->(c2),
+  cycle=shortestPath((c2)-[:DEPENDS_ON*]->(c1))
+RETURN
+  *
+----
+// end::designsmellCyclerAdvanced[]
+
+
+=== Encapsulation
+
+==== Glass Class
+
+==== Instagrammer
+// broken
+// tag::designsmellInstagrammer[]
+[[designsmell:Instagrammer]]
+[source,cypher,role=concept]
+.someText
+----
+MATCH (insta:Class {name: "Instagrammer"})-[:DECLARES]->(publicMethod:Method { visibility: "public"})
+OPTIONAL MATCH
+(client:Class)-[:DECLARES]->(clientMethod:Method)-[:INVOKES]->(publicMethod)
+WHERE
+	insta <> client AND
+    NOT publicMethod:Constructor
+return publicMethod.name
+----
+// end::designsmellInstagrammer[]
+
+
+==== Whistleblower
+// broken
+// tag::designsmellWhistleblower[]
+[[designsmell:Whistleblower]]
+[source,cypher,role=concept]
+.someText
+----
+MATCH
+    depPath = (client:Class {name:"Client"})-[:DEPENDS_ON*]->(internal:Class)<-[:CONTAINS]-(p:Package { name:"impl"})
+RETURN depPath
+----
+// end::designsmellWhistleblower[]
