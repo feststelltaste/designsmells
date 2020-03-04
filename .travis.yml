@@ -1,5 +1,8 @@
+dist: linux
 language: java
 jdk: openjdk8
 before_install:
 # Install GraphViz to test draw figures via jQAssistant
 - "sudo apt-get install graphviz"
+- chmod +x mvnw
+script: ./mvnw verify
