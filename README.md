@@ -1,5 +1,7 @@
 # Identifying design smells with jQAssistant
 
+[![Build Status](https://travis-ci.org/feststelltaste/designsmells.svg?branch=master)](https://travis-ci.org/feststelltaste/designsmells/)
+
 This repository contains a sample application with various design smells.
 The challenge is to find as many design smells as you can with the help of [jQAssistant](https://jqassistant.org/).
 jQAssistant is a structural code analysis framework (see [this blog post](https://www.feststelltaste.de/top5-jqassistant/) for getting to know jQAssistant a little bit better).
