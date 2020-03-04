@@ -38,6 +38,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jqassistant.contrib.plugin</groupId>
+                        <artifactId>jqassistant-apoc-plugin</artifactId>
+                        <version>${jqassistant.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
