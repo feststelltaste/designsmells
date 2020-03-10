@@ -64,6 +64,35 @@ LIMIT 1
 [[designsmell:CyclicHierarchy]]
 [source,cypher,role=concept]
 .A supertype refers to any of its subtypes.
+[graphviz, dot-example, svg]
+----
+digraph g {
+    fontsize = 8
+    rankdir = BT
+
+    node [
+        fontsize = 20
+        shape = "record"
+    ]
+
+    CyclicSubtype [ label=<{<b><i>CyclicSubtype</i></b><br/>|<i>+getData()</i><br/>}> ]
+    CyclicSupertype [ label=<{<b><i>CyclicSupertype</i></b><br/>|<i>+callSubtype()</i><br/>}> ]
+
+    edge [
+        fontsize = 8
+    ]
+    CyclicSupertype -> CyclicSubtype
+
+    edge [
+        fontsize = 8
+        arrowhead = empty
+    ]
+
+    CyclicSubtype -> CyclicSupertype
+}
+
+----
+
 ----
 MATCH
   (subtype:Type)-[:EXTENDS]->(supertype:Type)
@@ -72,6 +101,8 @@ WHERE
 RETURN
   supertype.fqn
 ----
+
+
 // end::designsmellCyclicHierarchy
 
 
