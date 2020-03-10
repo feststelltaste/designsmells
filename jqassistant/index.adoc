@@ -60,10 +60,8 @@ LIMIT 1
 // end::designsmellMonarch[]
 
 ==== Cyclic Hierarchy
-// tag::designsmellCyclic Hierarchy[]
-[[designsmell:CyclicHierarchy]]
-[source,cypher,role=concept]
-.A supertype refers to any of its subtypes.
+// tag::designsmellCyclicHierarchy[]
+
 [graphviz, dot-example, svg]
 ----
 digraph g {
@@ -93,6 +91,9 @@ digraph g {
 
 ----
 
+[[designsmell:CyclicHierarchy]]
+[source,cypher,role=concept]
+.A supertype refers to any of its subtypes.
 ----
 MATCH
   (subtype:Type)-[:EXTENDS]->(supertype:Type)
