@@ -26,6 +26,39 @@ LIMIT 1
 ----
 // end::designsmellGod[]
 
+==== Passive Abstraction (Data class)
+// tag::designsmellPassiveAbstraction[]
+[[designsmell:PassiveAbstraction]]
+[source,cypher,role=concept]
+.A class declares fields without any methods operating on it.
+----
+MATCH
+  (field:Field)<-[:DECLARES]-(class:Class)-[:DECLARES]->(method:Method)
+WHERE NOT
+  (method)-[:READS|:WRITES]->(field)
+AND
+  (class)<-[:CONTAINS]–(:Package {name: "passive"})
+RETURN
+  class AS Class, field AS Field, method AS `used by`
+----
+// end::designsmellPassiveAbstraction[]
+
+// tag::designsmellPassiveAbstractionAdvanced[]
+[[designsmell:PassiveAbstractionAdvanced]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Advanced: query result produces class diagram
+----
+MATCH
+  (field:Field)<-[:DECLARES]-(class:Class)-[:DECLARES]->(method:Method)
+WHERE NOT
+  (method)-[:READS|:WRITES]->(field)
+AND
+  (class)<-[:CONTAINS]–(:Package {name: "passive"})
+RETURN
+  *
+----
+// end::designsmellPassiveAbstractionAdvanced[]
+
 ==== Sibling
 // tag::designsmellSibling[]
 [[designsmell:Sibling]]
@@ -77,7 +110,7 @@ RETURN
 // tag::designsmellCyclicHierarchyAdvanced[]
 [[designsmell:CyclicHierarchyAdvanced]]
 [source,cypher,role=concept,reportType="plantuml-class-diagram"]
-.Advanced: query result produces class diagram
+.Advanced: query result produces class diagram.
 ----
 MATCH
   (subtype:Type)-[:EXTENDS]->(supertype:Type)
