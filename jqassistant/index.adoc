@@ -59,6 +59,42 @@ LIMIT 1
 ----
 // end::designsmellMonarch[]
 
+==== Cyclic Hierarchy
+// tag::designsmellCyclicHierarchy[]
+[[designsmell:CyclicHierarchy]]
+[source,cypher,role=concept]
+.A supertype refers to any of its subtypes.
+----
+MATCH
+  (subtype:Type)-[:EXTENDS]->(supertype:Type)
+WHERE
+  (supertype)-[:DEPENDS_ON]->(subtype)
+RETURN
+  supertype.fqn
+----
+// end::designsmellCyclicHierarchy
+
+// tag::designsmellCyclicHierarchyAdvanced[]
+[[designsmell:CyclicHierarchyAdvanced]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Advanced: query result produces class diagram
+----
+MATCH
+  (subtype:Type)-[:EXTENDS]->(supertype:Type)
+WHERE
+  (supertype)-[:DEPENDS_ON]->(subtype)
+OPTIONAL MATCH
+  (subtype)-[e:EXTENDS]->(supertype)
+OPTIONAL MATCH
+  (supertype)-[d:DEPENDS_ON]->(subtype)
+OPTIONAL MATCH
+  (supertype)-[:DECLARES]->(f:Method)
+OPTIONAL MATCH
+  (subtype)-[:DECLARES]->(m:Method)
+RETURN
+  *
+----
+// end::designsmellCyclicHierarchyAdvanced
 
 === Modularization
 
