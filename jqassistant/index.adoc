@@ -59,7 +59,7 @@ LIMIT 1
 ----
 // end::designsmellMonarch[]
 
-==== Cyclic Hierarchy (Simple Version)
+==== Cyclic Hierarchy
 // tag::designsmellCyclicHierarchy[]
 [[designsmell:CyclicHierarchy]]
 [source,cypher,role=concept]
