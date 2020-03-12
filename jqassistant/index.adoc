@@ -36,28 +36,24 @@ MATCH
   (field:Field)<-[:DECLARES]-(class:Class)-[:DECLARES]->(method:Method)
 WHERE NOT
   (method)-[:READS|:WRITES]->(field)
-AND
-  (class)<-[:CONTAINS]–(:Package {name: "passive"})
 RETURN
   class AS Class, field AS Field, method AS `used by`
 ----
 // end::designsmellPassiveAbstraction[]
 
-// tag::designsmellPassiveAbstractionAdvanced[]
-[[designsmell:PassiveAbstractionAdvanced]]
+// tag::designsmellPassiveAbstractionExample[]
+[[designsmell:PassiveAbstractionExample]]
 [source,cypher,role=concept,reportType="plantuml-class-diagram"]
-.Advanced: query result produces class diagram
+.Example: query result produces class diagram
 ----
 MATCH
-  (field:Field)<-[:DECLARES]-(class:Class)-[:DECLARES]->(method:Method)
+  (field:Field)<-[:DECLARES]-(class:Class {name: "DataHolder"})-[:DECLARES]->(method:Method)
 WHERE NOT
   (method)-[:READS|:WRITES]->(field)
-AND
-  (class)<-[:CONTAINS]–(:Package {name: "passive"})
 RETURN
   *
 ----
-// end::designsmellPassiveAbstractionAdvanced[]
+// end::designsmellPassiveAbstractionExample[]
 
 ==== Sibling
 // tag::designsmellSibling[]
