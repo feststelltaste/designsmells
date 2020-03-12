@@ -37,7 +37,8 @@ MATCH
 WHERE NOT
   (method)-[:READS|:WRITES]->(field)
 RETURN
-  class AS Class, field AS Field, method AS `used by`
+  class.fqn AS Class, field.name AS Field
+LIMIT 4
 ----
 // end::designsmellPassiveAbstraction[]
 
