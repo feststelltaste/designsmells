@@ -26,6 +26,67 @@ LIMIT 1
 ----
 // end::designsmellGod[]
 
+==== Passive Abstraction (Data class)
+// tag::designsmellPassiveAbstraction[]
+[[designsmell:PassiveAbstraction]]
+[source,cypher,role=concept]
+.A class declares fields without any methods operating on it.
+----
+MATCH
+  (field:Field)<-[:DECLARES]-(class:Class)-[:DECLARES]->(method:Method)
+WHERE NOT
+  (method)-[:READS|:WRITES]->(field)
+RETURN
+  class AS Class, field AS Field, method AS `used by`
+LIMIT 4
+----
+// end::designsmellPassiveAbstraction[]
+
+// tag::designsmellPassiveAbstractionExample[]
+[[designsmell:PassiveAbstractionExample]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Example: query result produces class diagram
+----
+MATCH
+  (field:Field)<-[:DECLARES]-(class:Class {name: "DataHolder"})-[:DECLARES]->(method:Method)
+WHERE NOT
+  (method)-[:READS|:WRITES]->(field)
+RETURN
+  *
+----
+// end::designsmellPassiveAbstractionExample[]
+
+==== Unutilized Abstraction (Hidden class)
+// tag::designsmellUnutilizedAbstraction[]
+[[designsmell:UnutilizedAbstraction]]
+[source,cypher,role=concept]
+.A class/interface that is not being used by anyone.
+----
+MATCH
+  (obsoleteType:Type)
+WHERE NOT
+  (obsoleteType)<-[:DEPENDS_ON]-(:Type)
+RETURN
+  obsoleteType.fqn
+LIMIT 4
+----
+// end::designsmellUnutilizedAbstraction[]
+
+// tag::designsmellUnutilizedAbstractionExample[]
+[[designsmell:UnutilizedAbstractionExample]]
+[source,cypher,role=concept]
+.Example: query shows overall usage of concrete classes.
+----
+MATCH
+  (consumer:Class)-[:DEPENDS_ON*]->(class:Class)
+RETURN
+  class.fqn AS Class, COUNT(consumer) AS `used by other classes`
+ORDER BY
+  `used by other classes` DESC
+LIMIT 4
+----
+// end::designsmellUnutilizedAbstractionExample[]
+
 ==== Sibling
 // tag::designsmellSibling[]
 [[designsmell:Sibling]]
@@ -74,6 +135,42 @@ LIMIT 1
 ----
 // end::designsmellMonarch[]
 
+==== Cyclic Hierarchy
+// tag::designsmellCyclicHierarchy[]
+[[designsmell:CyclicHierarchy]]
+[source,cypher,role=concept]
+.A supertype refers to any of its subtypes.
+----
+MATCH
+  (subtype:Type)-[:EXTENDS]->(supertype:Type)
+WHERE
+  (supertype)-[:DEPENDS_ON]->(subtype)
+RETURN
+  supertype.fqn
+----
+// end::designsmellCyclicHierarchy
+
+// tag::designsmellCyclicHierarchyAdvanced[]
+[[designsmell:CyclicHierarchyAdvanced]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Advanced: query result produces class diagram.
+----
+MATCH
+  (subtype:Type)-[:EXTENDS]->(supertype:Type)
+WHERE
+  (supertype)-[:DEPENDS_ON]->(subtype)
+OPTIONAL MATCH
+  (subtype)-[e:EXTENDS]->(supertype)
+OPTIONAL MATCH
+  (supertype)-[d:DEPENDS_ON]->(subtype)
+OPTIONAL MATCH
+  (supertype)-[:DECLARES]->(f:Method)
+OPTIONAL MATCH
+  (subtype)-[:DECLARES]->(m:Method)
+RETURN
+  *
+----
+// end::designsmellCyclicHierarchyAdvanced
 
 === Modularization
 
