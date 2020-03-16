@@ -40,6 +40,21 @@ RETURN
 ----
 // end::designsmellSibling[]
 
+==== Envious Abstraction
+// tag::designsmellEnviousAbstraction[]
+[[designsmell:EnviousAbstraction]]
+[source,cypher,role=concept]
+.Members of a class are more interested in member of another Class.
+----
+MATCH
+  (envious:Class)-[d:DECLARES]->(method:Method)-[i:INVOKES]->(method2:Method)
+WHERE method.name <> "<init>" AND method <> method2
+OPTIONAL MATCH
+  (target:Class)-[:DECLARES]->(method2)
+RETURN envious.fqn AS Class, target.fqn AS Target, COUNT(i) AS Invocations
+LIMIT 2
+----
+// end::designsmellEnviousAbstraction[]
 
 === Hierarchy
 
