@@ -101,6 +101,36 @@ RETURN
 ----
 // end::designsmellSibling[]
 
+==== Overlooked Abstraction (Interface bypass)
+// tag::designsmellOverlookedAbstraction[]
+[[designsmell:OverlookedAbstraction]]
+[source,cypher,role=concept]
+.A client bypasses the targets base abstraction.
+----
+MATCH
+  (client:Type)-[:DEPENDS_ON|:DECLARES]->(target:Type)-[:EXTENDS|:IMPLEMENTS]->(abstraction:Type)
+WHERE
+  abstraction.fqn <> "java.lang.Object"
+RETURN
+  client.fqn AS Client, target.name AS Target, abstraction.name AS `overlooked abstraction`
+LIMIT 4
+----
+// end::designsmellOverlookedAbstraction[]
+
+// tag::designsmellOverlookedAbstractionExample[]
+[[designsmell:OverlookedAbstractionExample]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Exmaple: query shows class diagram.
+----
+OPTIONAL MATCH
+  (client:Type {name: "Client"})-[d:DEPENDS_ON|:DECLARES]->(target:Type)-[e:EXTENDS|:IMPLEMENTS]->(abstraction:Type)
+WHERE
+  abstraction.fqn <> "java.lang.Object"
+RETURN
+  *
+----
+// end::designsmellOverlookedAbstractionExample[]
+
 
 === Hierarchy
 
