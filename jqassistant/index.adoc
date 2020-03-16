@@ -101,6 +101,35 @@ RETURN
 ----
 // end::designsmellSibling[]
 
+==== Dense Abstraction (High complexity)
+// tag::designsmellDenseAbstraction[]
+[[designsmell:DenseAbstraction]]
+[source,cypher,role=concept]
+.A class with high complexity.
+----
+MATCH
+  (class:Class)-[:DECLARES*]->(method:Method)
+WHERE
+  method.cyclomaticComplexity > 10
+RETURN
+  class.fqn AS Class, method.signature AS Method, method.cyclomaticComplexity AS Complexity
+----
+// end::designsmellDenseAbstraction[]
+
+// tag::designsmellDenseAbstraction[]
+[[designsmell:DenseAbstractionExample]]
+[source,cypher,role=concept]
+.Example: query result shows overall complexity.
+----
+MATCH
+  (class:Class)-[:DECLARES*]->(method:Method)
+RETURN
+  class.fqn AS Class, method.signature AS Method, method.cyclomaticComplexity AS Complexity
+ORDER BY Complexity DESC
+Limit 4
+----
+// end::designsmellDenseAbstraction[]
+
 
 === Hierarchy
 
