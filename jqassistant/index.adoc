@@ -119,9 +119,9 @@ LIMIT 2
 
 === Hierarchy
 
-==== Monarch
-// tag::designsmellMonarch[]
-[[designsmell:Monarch]]
+==== Complex Hierarchy (Monarch)
+// tag::designsmellComplexHierarchy[]
+[[designsmell:ComplexHierarchy]]
 [source,cypher,role=concept]
 .A class whose inheritance hierarchy goes very deep.
 ----
@@ -133,7 +133,21 @@ ORDER BY
   Depth desc
 LIMIT 1
 ----
-// end::designsmellMonarch[]
+// end::designsmellComplexHierarchy[]
+
+// tag::designsmellComplexHierarchyExample[]
+[[designsmell:ComplexHierarchyExample]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Example: query result produces class diagram.
+----
+MATCH
+  (m:Class {name: "NewDynamicPortalableMvcView2"})-[e:EXTENDS*]->(t:Type)
+RETURN
+  *
+----
+// end::designsmellComplexHierarchyExample[]
+
+
 
 ==== Cyclic Hierarchy
 // tag::designsmellCyclicHierarchy[]
