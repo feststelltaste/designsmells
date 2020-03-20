@@ -68,7 +68,7 @@ WHERE NOT
   (obsoleteType)<-[:DEPENDS_ON]-(:Type)
 RETURN
   obsoleteType.fqn
-LIMIT 4
+LIMIT 6
 ----
 // end::designsmellUnutilizedAbstraction[]
 
@@ -147,8 +147,6 @@ RETURN
 ----
 // end::designsmellComplexHierarchyExample[]
 
-
-
 ==== Cyclic Hierarchy
 // tag::designsmellCyclicHierarchy[]
 [[designsmell:CyclicHierarchy]]
@@ -185,6 +183,27 @@ RETURN
   *
 ----
 // end::designsmellCyclicHierarchyAdvanced
+
+==== Convenience Hierarchy
+// tag::designsmellConvenienceHierarchyExample[]
+[[designsmell:ConvenienceHierarchyExample]]
+[source,cypher,role=concept]
+.Example: query result shows overall amount of invoked and overridden methods.
+----
+MATCH
+ (subtype:Class)-[:EXTENDS]->(supertype:Class)-[:DECLARES]->(concreteMethod:Method)
+WHERE NOT concreteMethod:Constructor
+OPTIONAL MATCH
+  (subtype)-[:DECLARES]->(member:Member)-[i:INVOKES]->(inheritedMember:Member)
+WHERE
+  inheritedMember.signature = concreteMethod.signature
+OPTIONAL MATCH
+  (subtype)-[:DECLARES]->(m:Member)-[o:OVERRIDES]->(sm:Member)<-[:DECLARES]-(supertype)
+WHERE NOT m:Constructor
+RETURN
+  subtype.fqn AS Subtype, COUNT(i) AS `invokes members`, COUNT(DISTINCT o) AS `overrides members`, supertype.fqn AS `of supertype`
+----
+// end::designsmellConvenienceHierarchyExample[]
 
 === Modularization
 

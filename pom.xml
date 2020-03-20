@@ -39,6 +39,9 @@
                             <goal>scan</goal>
                             <goal>analyze</goal>
                         </goals>
+                    <configuration>
+                        <concepts>java:*</concepts>
+                    </configuration>
                     </execution>
                 </executions>
                 <dependencies>
