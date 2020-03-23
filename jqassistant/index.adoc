@@ -239,7 +239,20 @@ RETURN
 
 === Encapsulation
 
-==== Glass Class
+==== Deficient Encapsulation (Glass class)
+// tag::designsmellDeficientEncapsulation[]
+[[designsmell:DeficientEncapsulation]]
+[source,cypher,role=concept]
+.A class declares public fields.
+----
+MATCH
+  (class:Class)-[declares:DECLARES]->(field:Field)
+WHERE
+  field.visibility = 'public'
+RETURN
+  class.fqn AS Class, COUNT(declares) AS `public fields`
+----
+// end::designsmellDeficientEncapsulation[]
 
 ==== Instagrammer
 // broken
