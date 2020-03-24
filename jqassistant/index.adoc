@@ -207,7 +207,21 @@ RETURN
 
 === Modularization
 
-==== Cycler
+===== Insufficient Modularization
+// tag::designsmellInsufficientModularization[]
+[[designsmell:InsufficientModularization]]
+[source,cypher,role=concept]
+.A class with a large number of methods in its public interface.
+----
+MATCH
+(interface:Interface)<-[:IMPLEMENTS]-(class:Class)-[d:DECLARES]->(:Method)
+RETURN
+  class.fqn AS Class, interface.fqn AS `public interface`, COUNT(d) AS Methods
+ORDER BY
+  Methods DESC
+LIMIT 1
+----
+// end::designsmellInsufficientModularization[]
 
 ===== Cycler (Simple Version)
 // tag::designsmellCyclerSimple[]
@@ -236,9 +250,9 @@ RETURN
 ----
 // end::designsmellCyclerAdvanced[]
 
-===== Hub-like
-// tag::designsmellHub[]
-[[designsmell:Hub]]
+===== Hub-like Modularization
+// tag::designsmellHubModularization[]
+[[designsmell:HubModularization]]
 [source,cypher,role=concept]
 .A class with a large number of dependencies.
 ----
@@ -250,7 +264,7 @@ ORDER BY
   `incoming dependencies` DESC, `outgoing dependencies` DESC
 LIMIT 3
 ----
-// end::designsmellHub[]
+// end::designsmellHubModularization[]
 
 // tag::designsmellHubExample[]
 [[designsmell:HubExample]]
