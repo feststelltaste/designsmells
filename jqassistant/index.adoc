@@ -236,6 +236,33 @@ RETURN
 ----
 // end::designsmellCyclerAdvanced[]
 
+===== Hub-like
+// tag::designsmellHub[]
+[[designsmell:Hub]]
+[source,cypher,role=concept]
+.A class with a large number of dependencies.
+----
+MATCH
+  (:Class)-[outgoing:DEPENDS_ON]->(class:Class)-[incoming:DEPENDS_ON]->(:Class)
+RETURN
+  class.fqn AS Class, COUNT(DISTINCT incoming) AS `incoming dependencies`, COUNT(DISTINCT outgoing) AS `outgoing dependencies`
+ORDER BY
+  `incoming dependencies` DESC, `outgoing dependencies` DESC
+LIMIT 3
+----
+// end::designsmellHub[]
+
+// tag::designsmellHubExample[]
+[[designsmell:HubExample]]
+[source,cypher,role=concept,reportType="plantuml-class-diagram"]
+.Example: query shows class diagram.
+----
+MATCH
+  (c:Class)-[outgoing:DEPENDS_ON]->(class:Class {name: "Hub"})-[incoming:DEPENDS_ON]->(cl:Class)
+RETURN
+  *
+----
+// end::designsmellHubExample[]
 
 === Encapsulation
 
