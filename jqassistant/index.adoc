@@ -300,7 +300,7 @@ RETURN
 // tag::designsmellInstagrammer[]
 [[designsmell:Instagrammer]]
 [source,cypher,role=concept]
-.someText
+.A class that gives more information about it in public than what is necessary.
 ----
 MATCH (insta:Class {name: "Instagrammer"})-[:DECLARES]->(publicMethod:Method { visibility: "public"})
 OPTIONAL MATCH
