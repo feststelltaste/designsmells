@@ -296,11 +296,10 @@ RETURN
 // end::designsmellDeficientEncapsulation[]
 
 ==== Instagrammer
-// broken
 // tag::designsmellInstagrammer[]
 [[designsmell:Instagrammer]]
 [source,cypher,role=concept]
-.A class that gives more information about it in public than what is necessary.
+.A class that gives more information about it in public than necessary.
 ----
 MATCH (insta:Class {name: "Instagrammer"})-[:DECLARES]->(publicMethod:Method { visibility: "public"})
 OPTIONAL MATCH
@@ -308,20 +307,20 @@ OPTIONAL MATCH
 WHERE
 	insta <> client AND
     NOT publicMethod:Constructor
-return publicMethod.name
+return insta.fqn as Instagrammer, publicMethod.name as unnecessarilyPublicMethod
 ----
 // end::designsmellInstagrammer[]
 
 
 ==== Whistleblower
-// broken
 // tag::designsmellWhistleblower[]
 [[designsmell:Whistleblower]]
 [source,cypher,role=concept]
-.someText
+.Own library class that reveals internal data structures to external clients.
 ----
 MATCH
-    depPath = (client:Class {name:"Client"})-[:DEPENDS_ON*]->(internal:Class)<-[:CONTAINS]-(p:Package { name:"impl"})
-RETURN depPath
+    (pclient:Package)-[:CONTAINS]->(client)-[:DEPENDS_ON*]->(internal:Class)<-[:CONTAINS]-(plib:Package { name:"impl"})<-[:CONTAINS]-(pservice:Package)
+WHERE NOT (pservice)-[:CONTAINS*]->(pclient)
+RETURN DISTINCT client.fqn as Client, internal.fqn as Internal
 ----
 // end::designsmellWhistleblower[]
