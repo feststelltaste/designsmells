@@ -41,6 +41,10 @@
                         </goals>
                     <configuration>
                         <concepts>java:*</concepts>
+                        <rule>
+                            <defaultConceptSeverity>INFO</defaultConceptSeverity>
+                            <defaultConstraintSeverity>INFO</defaultConstraintSeverity>
+                        </rule>
                     </configuration>
                     </execution>
                 </executions>
