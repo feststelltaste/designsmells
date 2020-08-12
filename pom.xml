@@ -40,7 +40,10 @@
                             <goal>analyze</goal>
                         </goals>
                     <configuration>
-                        <concepts>java:*</concepts>
+                        <concepts>
+                            <concept>java:*</concept>
+                            <concept>designsmell:*</concept>
+                        </concepts>
                         <rule>
                             <defaultConceptSeverity>INFO</defaultConceptSeverity>
                             <defaultConstraintSeverity>INFO</defaultConstraintSeverity>
