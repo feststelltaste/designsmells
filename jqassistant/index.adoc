@@ -207,7 +207,7 @@ RETURN
 
 === Modularization
 
-===== Insufficient Modularization
+==== Insufficient Modularization
 // tag::designsmellInsufficientModularization[]
 [[designsmell:InsufficientModularization]]
 [source,cypher,role=concept]
@@ -223,7 +223,7 @@ LIMIT 1
 ----
 // end::designsmellInsufficientModularization[]
 
-===== Cycler (Simple Version)
+==== Cycler (Simple Version)
 // tag::designsmellCyclerSimple[]
 [[designsmell:CyclerSimple]]
 [source,cypher,role=concept]
@@ -236,7 +236,7 @@ RETURN
 ----
 // end::designsmellCyclerSimple[]
 
-===== Cycler (Advanced Version)
+==== Cycler (Advanced Version)
 // tag::designsmellCyclerAdvanced[]
 [[designsmell:CyclerAdvanced]]
 [source,cypher,role=concept,reportType="plantuml-class-diagram"]
@@ -250,7 +250,7 @@ RETURN
 ----
 // end::designsmellCyclerAdvanced[]
 
-===== Hub-like Modularization
+==== Hub-like Modularization
 // tag::designsmellHubModularization[]
 [[designsmell:HubModularization]]
 [source,cypher,role=concept]
