@@ -10,6 +10,13 @@ If you need some inspiration about what to find, take a look at this paper:
 
 > Ganesh, Samarthyam & Sharma, Tushar. (2013). Towards a Principle-based Classification of Structural Design Smells. Journal of Object Technology. 12. 10.5381/jot.2013.12.2.a1. 
 
+## Online Version
+
+* Please login into https://hobby-dhecfkdfpfnpgbkefmfnhael.dbs.graphenedb.com:24787/browser/
+ * User: `user`
+ * Password: `b.cKOL3KxJO2aW.Ivdq38GXw8SnFVJl`
+
+Note: The database might be in hibernation mode, which could cause an "Internal Server Error". In this case, please click on the URL above again.
 
 ## Prerequisites
 
