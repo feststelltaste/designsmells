@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>8</java.version>
-        <jqassistant.version>1.8.0</jqassistant.version>
+        <jqassistant.version>1.10.0</jqassistant.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -55,7 +55,7 @@
                     <dependency>
                         <groupId>org.jqassistant.contrib.plugin</groupId>
                         <artifactId>jqassistant-apoc-plugin</artifactId>
-                        <version>${jqassistant.version}</version>
+			<version>${jqassistant.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

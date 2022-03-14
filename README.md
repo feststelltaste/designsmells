@@ -23,7 +23,7 @@ Note: The database might be in hibernation mode, which could cause an "Internal 
 
 ### Minimum requirements
 
-* OpenJDK Java Development Kit with Version >=8 ([download](https://openjdk.java.net/install/))
+* OpenJDK Java Development Kit with Version 11 ([download](https://openjdk.java.net/install/))
 * Git ([download](https://git-scm.com/downloads))
 
 

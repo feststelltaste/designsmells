@@ -16,7 +16,7 @@ Wenn du Inspirationen brauchst, was es zu finden gilt, dann wirf einen Blick in 
 
 ### Mindestanforderungen
 
-* OpenJDK Java Development Kit mit Version >=8 ([download](https://openjdk.java.net/install/))
+* OpenJDK Java Development Kit mit Version 11 ([download](https://openjdk.java.net/install/))
 * Git ([download](https://git-scm.com/downloads))
 
 
